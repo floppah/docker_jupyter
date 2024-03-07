@@ -1,8 +1,9 @@
 
+ARG REGISTRY=quay.io
+ARG OWNER=jupyter
+ARG BASE_CONTAINER=$REGISTRY/$OWNER/base-notebook
+FROM $BASE_CONTAINER
 
-FROM jupyter/minimal-notebook:latest
-
-LABEL maintainer="DLG DET DS Squad>"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
