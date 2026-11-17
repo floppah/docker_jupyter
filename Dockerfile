@@ -21,6 +21,7 @@ RUN fix-permissions $CONDA_DIR && fix-permissions /home/$NB_USER
 
 EXPOSE 8888
 EXPOSE 8080
+EXPOSE 3001
 
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
@@ -40,5 +41,9 @@ COPY jupyter_notebook_config.py /etc/jupyter
 RUN chmod 777 /etc/jupyter/jupyter_notebook_config.py
 
 USER $NB_UID
+
+RUN pip install jupyter-ai
+RUN curl -fsSL https://opencode.ai/v2/install | bash
+
 
 WORKDIR $HOME
