@@ -46,12 +46,13 @@ RUN chmod 777 /usr/local/bin/start-notebook.sh
 COPY jupyter_notebook_config.py /etc/jupyter
 RUN chmod 777 /etc/jupyter/jupyter_notebook_config.py
 
+COPY opencode.json /home/jovyan/.config/opencode/opencode.json
+RUN chmod 777 /home/jovyan/.config/opencode/opencode.json
+
 USER $NB_UID
 
 RUN pip install jupyter-ai
 RUN pip install jupyterlab-terminal-clipboard-extension
 RUN curl -fsSL https://opencode.ai/v2/install | bash
-COPY opencode.json /home/jovyan/.config/opencode/opencode.json
-RUN chmod 777 /home/jovyan/.config/opencode/opencode.json
 
 WORKDIR $HOME
