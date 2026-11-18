@@ -47,7 +47,7 @@ COPY jupyter_notebook_config.py /etc/jupyter
 RUN chmod 777 /etc/jupyter/jupyter_notebook_config.py
 
 COPY opencode.json /home/jovyan/.config/opencode/opencode.json
-RUN chmod 777 /home/jovyan/.config/opencode/opencode.json
+RUN chmod -R 777 /home/jovyan/.config/
 
 USER $NB_UID
 
