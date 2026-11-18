@@ -30,8 +30,10 @@ CMD ["start-notebook.sh"]
 
 USER root
 
-# enable SSH on port 3022
-# RUN cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+# install SSH and enable on port 3022
+RUN apt update
+RUN apt install openssh-server
+RUN cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 RUN sed -i 's/^#\?Port .*/Port 3022/' /etc/ssh/sshd_config || echo 'Port 3022'
 RUN tee -a /etc/ssh/sshd_config
 
