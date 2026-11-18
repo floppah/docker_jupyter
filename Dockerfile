@@ -43,7 +43,9 @@ RUN chmod 777 /etc/jupyter/jupyter_notebook_config.py
 USER $NB_UID
 
 RUN pip install jupyter-ai
+RUN pip install jupyterlab-terminal-clipboard-extension
 RUN curl -fsSL https://opencode.ai/v2/install | bash
+RUN opencode mcp add localhost --global --url http://127.0.0.1:3001/mcp
 
 
 WORKDIR $HOME
