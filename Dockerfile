@@ -52,5 +52,6 @@ RUN pip install jupyter-ai
 RUN pip install jupyterlab-terminal-clipboard-extension
 RUN curl -fsSL https://opencode.ai/v2/install | bash
 COPY opencode.json /home/jovyan/.config/opencode/opencode.json
+RUN RUN chmod 777 /home/jovyan/.config/opencode/opencode.json
 
 WORKDIR $HOME
