@@ -22,12 +22,18 @@ RUN fix-permissions $CONDA_DIR && fix-permissions /home/$NB_USER
 EXPOSE 8888
 EXPOSE 8080
 EXPOSE 3001
+EXPOSE 3022
 
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 USER root
+
+# enable SSH on port 3022
+RUN cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+RUN sed -i 's/^#\?Port .*/Port 3022/' /etc/ssh/sshd_config || echo 'Port 3022'
+RUN tee -a /etc/ssh/sshd_config
 
 RUN usermod -aG sudo jovyan
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -46,6 +52,5 @@ RUN pip install jupyter-ai
 RUN pip install jupyterlab-terminal-clipboard-extension
 RUN curl -fsSL https://opencode.ai/v2/install | bash
 RUN opencode mcp add localhost --global --url http://127.0.0.1:3001/mcp
-
 
 WORKDIR $HOME
