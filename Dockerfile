@@ -40,6 +40,9 @@ RUN tee -a /etc/ssh/sshd_config
 RUN usermod -aG sudo jovyan
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# install nodejs
+RUN apt install nodejs npm
+
 # Copy local files as late as possible to avoid cache busting
 COPY start.sh start-notebook.sh /usr/local/bin/
 RUN chmod 777 /usr/local/bin/start.sh
@@ -53,8 +56,18 @@ RUN chmod -R 777 /home/jovyan/.config/
 
 USER $NB_UID
 
+# Opencode and Jupyter dependencies
 RUN pip install jupyter-ai
 RUN pip install jupyterlab-terminal-clipboard-extension
 RUN curl -fsSL https://opencode.ai/v2/install | bash
+
+# dynamic context protocol to prune unnecessary context
+RUN opencode plugin add @tarquinen/opencode-dcp@latest
+# Graphify to make opencode super smart
+RUN pip install graphifyy
+RUN graphify install --project --platform opencode
+# Claude-mem to make opencode remember things like an elephant
+RUN npx claude-mem install --ide opencode
+
 
 WORKDIR $HOME
