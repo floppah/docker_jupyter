@@ -67,7 +67,7 @@ RUN opencode plugin add @tarquinen/opencode-dcp@latest
 RUN pip install graphifyy
 RUN graphify install --project --platform opencode
 # Claude-mem to make opencode remember things like an elephant
-RUN npx claude-mem install --ide opencode
+RUN npx claude-mem install --provider host --ide opencode
 # ponytail to make opencode code like a proper nerd
 RUN opencode plugin add @dietrichgebert/ponytail
 
